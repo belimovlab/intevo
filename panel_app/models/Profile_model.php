@@ -42,7 +42,7 @@ class Profile_model extends CI_Model {
         
         public function send_email()
         {
-
+            //sdsd
             $to  = "sbelimov@gmail.com" ; 
 
             $subject = "Тестовое письмо"; 

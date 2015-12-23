@@ -95,4 +95,14 @@ class Profile_model extends CI_Model {
             return $active_code ? $active_code : false;
         }
         
+        public function set_new_password_by_email_and_active_code($email,$active_code,$password)
+        {
+            $this->db->update('profile',array(
+                'active_code'=>'',
+                'password'=>md5(ENCRYPTION_KEY.$password)
+            ),array(
+                'email'=>$email
+            ));
+        }
+        
 }

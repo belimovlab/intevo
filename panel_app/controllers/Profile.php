@@ -12,7 +12,8 @@ class Profile extends CI_Controller {
             'profile/send_forgot',
             'profile/try_forgot',
             'profile/send_new_password',
-            'profile/reset_password'
+            'profile/reset_password',
+            'profile/save_new_password'
         );
                 
         function __construct() {
@@ -167,6 +168,8 @@ class Profile extends CI_Controller {
         {
             if($email && $active_code)
             {
+                $this->data['email'] = $email;
+                $this->data['active_code'] = $active_code;        
                 $this->data['error'] = $this->themelib->getSessionValue('error');
                 $this->load->view('profile/reset_password',  $this->data); 
             }
@@ -176,6 +179,55 @@ class Profile extends CI_Controller {
             }
         }
         
+        public function save_new_password()
+        {
+            if($this->auth->is_logined())
+            {
+                redirect('/');
+            }
+            else
+            {
+                if(!$this->input->post('password') || !$this->input->post('re_password') || !$this->input->post('password') != !$this->input->post('re_password'))
+                {
+                    $this->session->set_userdata('error','Заполните все поля.');
+                    redirect('/profile/login');
+                }
+                else
+                {
+                    if(!$this->input->post('user_email') || !$this->input->post('user_active_code'))
+                    {
+                        $this->session->set_userdata('error','Неверные данные для восстановления пароля.');
+                        redirect('/profile/login');
+                    }
+                    else
+                    {
+
+                        if($this->profile_model->get_active_code_by_email($this->input->post('user_email')) == $this->input->post('user_active_code'))
+                        {
+                            $this->profile_model->set_new_password_by_email_and_active_code($this->input->post('user_email'), $this->input->post('user_active_code'),  $this->input->post('password'));
+                            
+                            $user_info = $this->profile_model->getUserByEmailAndPassword($this->input->post('user_email'),$this->input->post('password'));
+                            if($user_info->id)
+                            {
+                                $this->auth->user_login($user_info);
+                                redirect('/');
+                            }
+                            else
+                            {
+                                $this->session->set_userdata('error','Пользователя с такими данными нет.');
+                                redirect('/profile/login');
+                            }
+                            
+                        }
+                        else
+                        {
+                            $this->session->set_userdata('error','Неверные данные для восстановления пароля.');
+                            redirect('/profile/reset_password/'.$this->input->post('user_email').'/'.$this->input->post('user_active_code'));
+                        }
+                    }
+                }
+            }
+        }
         
         
 }

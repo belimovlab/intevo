@@ -9,6 +9,7 @@
     <link href="/panel_assets/css/component.css" rel="stylesheet" type="text/css"/>
     <script src="/panel_assets/js/jquery-2.1.1.min.js"></script>
     <script src="/panel_assets/js/classie.js"></script>
+    
     <meta name="viewport" content="width=1200px">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -37,28 +38,25 @@
                         <?php echo $error;?>
                     </p>
                     <?php endif;?>
-                    <?php if($success):?>
-                    <p class="success">
-                        <?php echo $success;?>
-                    </p>
-                    <?php endif;?>
-                    <form action="<?php echo base_url('/profile/try_forgot')?>" method="POST">
+                    <form action="<?php echo base_url('/profile/save_new_password')?>" method="POST">
                     <p>
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Введите ваш Email..." required>
-                        <span class="sub_input">На указанный Email придет уведомление с инструкцией для смены пароля.</span>
+                        <label for="password">Новый пароль</label>
+                        <input type="password" id="password" name="password" placeholder="Введите новый пароль..." required>
                     </p>
-                    
-                    <p style="text-align: center;">
-                        <button class="button button-highlight button-small" type="submit">Выслать новый пароль</button>
+                    <p>
+                        <label for="re_password">Повторение пароля</label>
+                        <input type="password" id="re_password" name="re_password" placeholder="Повторите новый пароль..." required="">
                     </p>
+                    <input type="hidden" name="user_email" value="<?php echo $email;?>">
+                    <input type="hidden" name="user_active_code" value="<?php echo $active_code;?>">
                     <p style="text-align: center;">
-                        <a href="<?php echo base_url('/profile/login')?>"> Я помню пароль</a>
+                        <button class="button button-primary button-small" type="submit">Сменить пароль</button>
                     </p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script src="/panel_assets/js/html5_validator.js"></script>
 </body>
 </html>

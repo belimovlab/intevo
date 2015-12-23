@@ -64,4 +64,24 @@ class Profile_model extends CI_Model {
             echo mail($to, $subject, $message, $headers); 
         }
 
+        public function check_user_by_email($email)
+        {
+            return $this->db->get_where('profile',array('email'=>$email))->row()->id ? true : false;
+        }
+        
+        
+        public function set_new_password_by_email($email)
+        {
+            $user_info = $this->db->get_where('profile',array('email'=>$email))->row();
+            if(!$user_info->id)
+            {
+                return false;
+            }
+            else
+            {
+                $new_active_code = md5(ENCRYPTION_KEY.mktime());
+                //$this->db->update
+            }
+        }
+        
 }

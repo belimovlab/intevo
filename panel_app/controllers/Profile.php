@@ -99,4 +99,34 @@ class Profile extends CI_Controller {
             }
         }
         
+        public function try_forgot()
+        {
+            if($this->auth->is_logined())
+            {
+                redirect('/');
+            }
+            else
+            {
+                if($this->input->post('email'))
+                {
+                    if($this->profile_model->check_user_by_email($this->input->post('email')))
+                    {
+                        //$this->db->
+                    }
+                    else
+                    {
+                        $this->session->set_userdata('error','Данный Email не зарегистрирован в системе.');
+                        redirect('/profile/forgot');
+                    }
+                }
+                else
+                {
+                    $this->session->set_userdata('error','Заполните все поля.');
+                    redirect('/profile/forgot');
+                }
+                
+            }
+        }
+        
+        
 }

@@ -37,7 +37,7 @@
                         <?php echo $error;?>
                     </p>
                     <?php endif;?>
-                    <form action="<?php echo base_url('/profile/try_login')?>" method="POST">
+                    <form action="<?php echo base_url('/profile/try_forgot')?>" method="POST">
                     <p>
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="Введите ваш Email..." required>

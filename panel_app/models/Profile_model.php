@@ -89,4 +89,10 @@ class Profile_model extends CI_Model {
             }
         }
         
+        public function get_active_code_by_email($email)
+        {
+            $active_code = $this->db->get_where('profile',array('email'=>$email))->row()->active_code;
+            return $active_code ? $active_code : false;
+        }
+        
 }

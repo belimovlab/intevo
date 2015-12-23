@@ -10,12 +10,18 @@ class Profile extends CI_Controller {
             'profile/try_login',
             'profile/forgot',
             'profile/send_forgot',
-            'profile/try_forgot'
+            'profile/try_forgot',
+            'profile/send_new_password',
+            'profile/reset_password'
         );
                 
         function __construct() {
             parent::__construct();
-            if(!$this->auth->is_logined() && !in_array($this->uri->uri_string, $this->url_permission))
+            if( $this->uri->segment(2) == 'reset_password')
+            {
+                $this->url_permission[] = $this->uri->uri_string;
+            }
+            if(!$this->auth->is_logined() && !in_array($this->uri->uri_string, $this->url_permission) )
             {
                 redirect('/profile/login');
             }
@@ -116,6 +122,7 @@ class Profile extends CI_Controller {
                     {
                         if($this->profile_model->set_new_password_by_email($this->input->post('email')))
                         {
+                            $this->send_new_password($this->input->post('email'));
                             $this->session->set_userdata('success','На указанный Email отправлено письмо с инструкциями для восстановления доступа.');
                             redirect('/profile/forgot');
                         }
@@ -138,6 +145,37 @@ class Profile extends CI_Controller {
                 }
             }
         }
+        
+        private function send_new_password($email)
+        {
+            $active_code  = $this->profile_model->get_active_code_by_email($email);
+            if($active_code)
+            {
+                $this->data['active_code'] = $active_code;
+                $this->data['email'] = $email;
+                echo $this->load->view('/email_template/forgot',  $this->data,true);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
+        
+        public function reset_password($email='',$active_code='')
+        {
+            if($email && $active_code)
+            {
+                $this->data['error'] = $this->themelib->getSessionValue('error');
+                $this->load->view('profile/reset_password',  $this->data); 
+            }
+            else
+            {
+                redirect('/profile/login');
+            }
+        }
+        
         
         
 }

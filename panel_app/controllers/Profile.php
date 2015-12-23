@@ -9,7 +9,8 @@ class Profile extends CI_Controller {
             'profile/login',
             'profile/try_login',
             'profile/forgot',
-            'profile/send_forgot'
+            'profile/send_forgot',
+            'profile/try_forgot'
         );
                 
         function __construct() {
@@ -36,7 +37,7 @@ class Profile extends CI_Controller {
             {
                 $this->data['error'] = $this->themelib->getSessionValue('error');
                 $this->load->view('profile/login',  $this->data); 
-                $this->profile_model->send_email();
+
             }
             
         }
@@ -95,12 +96,14 @@ class Profile extends CI_Controller {
             else
             {
                 $this->data['error'] = $this->themelib->getSessionValue('error');
+                $this->data['success'] = $this->themelib->getSessionValue('success');
                 $this->load->view('profile/forgot',  $this->data); 
             }
         }
         
         public function try_forgot()
         {
+            
             if($this->auth->is_logined())
             {
                 redirect('/');
@@ -111,7 +114,16 @@ class Profile extends CI_Controller {
                 {
                     if($this->profile_model->check_user_by_email($this->input->post('email')))
                     {
-                        //$this->db->
+                        if($this->profile_model->set_new_password_by_email($this->input->post('email')))
+                        {
+                            $this->session->set_userdata('success','На указанный Email отправлено письмо с инструкциями для восстановления доступа.');
+                            redirect('/profile/forgot');
+                        }
+                        else
+                        {
+                            $this->session->set_userdata('error','Данный Email не зарегистрирован в системе.');
+                            redirect('/profile/forgot');
+                        }
                     }
                     else
                     {
@@ -124,7 +136,6 @@ class Profile extends CI_Controller {
                     $this->session->set_userdata('error','Заполните все поля.');
                     redirect('/profile/forgot');
                 }
-                
             }
         }
         

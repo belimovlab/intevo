@@ -37,6 +37,11 @@
                         <?php echo $error;?>
                     </p>
                     <?php endif;?>
+                    <?php if($success):?>
+                    <p class="success">
+                        <?php echo $success;?>
+                    </p>
+                    <?php endif;?>
                     <form action="<?php echo base_url('/profile/try_forgot')?>" method="POST">
                     <p>
                         <label for="email">Email</label>

@@ -785,6 +785,13 @@ p{
     padding: 5px 0px;
 }
 
+.login p.success{
+    color: green;
+    text-align: center;
+    padding: 5px 0px;
+}
+
+
 .login a{
     color: #2980b9;
     text-decoration: none;

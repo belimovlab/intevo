@@ -80,7 +80,12 @@ class Profile_model extends CI_Model {
             else
             {
                 $new_active_code = md5(ENCRYPTION_KEY.mktime());
-                //$this->db->update
+                $this->db->update('profile',array(
+                    'active_code'=>$new_active_code
+                ),array(
+                    'email'=>$user_info->email
+                ));
+                return true;
             }
         }
         

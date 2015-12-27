@@ -154,8 +154,10 @@ class Profile extends CI_Controller {
             {
                 $this->data['active_code'] = $active_code;
                 $this->data['email'] = $email;
-                echo $this->load->view('/email_template/forgot',  $this->data,true);
-                return true;
+                $content =  $this->load->view('/email_template/forgot',  $this->data,true);
+                $this->profile_model->send_email($email, 'Восстановление пароля', $content);
+                $this->session->set_userdata('success','На указанный Email отправлено письмо с инструкциями.');
+                redirect('/profile/forgot');
             }
             else
             {

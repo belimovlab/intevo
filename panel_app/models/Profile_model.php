@@ -40,28 +40,13 @@ class Profile_model extends CI_Model {
             }
         }
         
-        public function send_email()
+        public function send_email($to,$subject,$content,$from='')
         {
-            
-            $to  = "sbelimov@gmail.com" ; 
-
-            $subject = "Тестовое письмо"; 
-
-            $message = ' 
-            <html> 
-                <head> 
-                    <title>Проверка письма</title> 
-                </head> 
-                <body> 
-                    <p>Тестовое сообщение</p> 
-                </body> 
-            </html>'; 
-
+            $from_email = $from ? $from : $this->session->userdata('system_info')->from_email;
             $headers  = "Content-type: text/html; charset=utf-8 \r\n"; 
-            $headers .= "From: Svyatoslav Belimov <sbelimov@gmail.com>\r\n"; 
-            $headers .= "Bcc: sbelimov@gmail.com>\r\n"; 
-
-            echo mail($to, $subject, $message, $headers); 
+            $headers .= "From: Администрация сервиса <".$from.">\r\n"; 
+            $headers .= "Bcc: <".$from.">\r\n"; 
+            mail($to, $subject, $content, $headers); 
         }
 
         public function check_user_by_email($email)

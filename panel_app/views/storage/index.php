@@ -1,60 +1,17 @@
 <?php echo $header;?>
     <div class="page_header">
         <ul class="breadcrumb">
-            <li><a href="#">Рабочий стол </a></li>
-            <li class="active">Настройки </li>
+            <li><a href="<?php echo base_url('/')?>">Рабочий стол</a></li>
+            <li class="active"><?php echo $title;?></li>
         </ul>
     </div>
     <div class="page_wrapper">
-        <div class="page">
-            <div class="page_title">Настройки сайта</div>
-            <div class="page_content">
-                <div class="grid_container">
-                    <div class="grid_item_2">
-                        <p>
-                            <label for="site_name">Название сайта</label>
-                            <input type="text" id="site_name" placeholder="Название магазина">
-                        </p>
-                    </div>
-                    <div class="grid_item_2">
-                        <p>
-                            <label for="site_name">Адрес почтовый</label>
-                            <input type="text" id="site_name" placeholder="Н-р: 644880, Россия, Омская обл., с. Азово, ул. Волжская, 21">
-                        </p>
-                    </div>
-                    <div class="grid_item_4">
-                        <p>
-                            <label for="site_name">Текстовый блок</label>
-                            <textarea type="text" id="site_name" placeholder="Н-р: 644880, Россия, Омская обл., с. Азово, ул. Волжская, 21"></textarea>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="grid_container">
-                    <div class="grid_item_1">
-                        <p>
-                            <label for="site_name">Название сайта</label>
-                            <input type="text" id="site_name" placeholder="Название магазина">
-                        </p>
-                    </div>
-                    <div class="grid_item_3">
-                        <p>
-                            <label for="site_name">Доставка</label>
-                            <input type="text" id="site_name" placeholder="Название магазина">
-                        </p>
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
         <div class="page">
             <div class="page_title">Файловый менеджер</div>
             <div class="page_content">
                 <div class="filemanager">
                     <p>
-                        <a class="button button-primary button-small"><i class="fa fa-plus"></i> Добавить новую папку</a>
+                        <a class="button button-primary button-small"><i class="fa fa-folder-open"></i> Добавить новую папку</a>
                         <a class="button button-action button-small"><i class="fa fa-upload"></i> Загрузить новый файл</a>
                         или 
                     </p>

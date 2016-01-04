@@ -32,12 +32,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($folders as $one):?>
                             <tr>
                                 <td><i class="fa fa-folder" style="color: #FFB300;"></i></td>
-                                <td><strong>Photography</strong></td>
+                                <td class="folder_link"><a href="<?php echo base_url('/storage/folder/'.$one->id)?>"><strong><?php echo $one->name?></strong></a></td>
                                 <td>Папка</td>
                                 <td>-</td>
-                                <td>09.12.2015</td>
+                                <td><?php echo date('d.m.Y',  strtotime($one->create_date))?></td>
                                 <td>
                                     <a href="#"><i class="fa fa-eye"></i></a>
                                     <a href="#"><i class="fa fa-link"></i></a>
@@ -45,38 +46,16 @@
 
                                 </td>
                             </tr>
-                            <tr>
-                                <td><i class="fa fa-folder" style="color: #FFB300;"></i></td>
-                                <td><strong>Images</strong></td>
-                                <td>Папка</td>
-                                <td>-</td>
-                                <td>05.12.2015</td>
-                                <td>
-                                    <a href="#"><i class="fa fa-eye"></i></a>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
+                            <?php endforeach;?>
 
-                                </td>
-                            </tr>
+                            
+                            <?php foreach($files as $one):?>
                             <tr>
-                                <td><i class="fa fa-folder" style="color: #FFB300;"></i></td>
-                                <td><strong>System</strong></td>
-                                <td>Папка</td>
-                                <td>-</td>
-                                <td>04.12.2015</td>
-                                <td>
-                                    <a href="#"><i class="fa fa-eye"></i></a>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa fa-file-image-o"></i></td>
-                                <td><strong>logo.png</strong></td>
+                                <td><i class="fa <?php echo font_awesome_file_icon_class($one->myme_type)?>"></i></td>
+                                <td><strong><?php echo $one->name?></strong></td>
                                 <td>Файл</td>
-                                <td>100Kb</td>
-                                <td>09.12.2015</td>
+                                <td><?php echo formatSizeUnits($one->size)?></td>
+                                <td><?php echo date('d.m.Y',  strtotime($one->create_date))?></td>
                                 <td>
                                     <a href="#"><i class="fa fa-eye"></i></a>
                                     <a href="#"><i class="fa fa-link"></i></a>
@@ -84,45 +63,8 @@
 
                                 </td>
                             </tr>
-                            <tr>
-                                <td><i class="fa fa-file-pdf-o"></i></td>
-                                <td><strong>instructions.pdf</strong></td>
-                                <td>Файл</td>
-                                <td>100Kb</td>
-                                <td>09.12.2015</td>
-                                <td>
-                                    <a href="#"><i class="fa fa-eye"></i></a>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa fa-file-excel-o"></i></td>
-                                <td><strong>stylsheed.xls</strong></td>
-                                <td>Файл</td>
-                                <td>100Kb</td>
-                                <td>09.12.2015</td>
-                                <td>
-                                    <a href="#"><i class="fa fa-eye"></i></a>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i class="fa fa-file-text-o"></i></td>
-                                <td><strong>passwords.txt</strong></td>
-                                <td>Файл</td>
-                                <td>100Kb</td>
-                                <td>09.12.2015</td>
-                                <td>
-                                    <a href="#"><i class="fa fa-eye"></i></a>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
-
-                                </td>
-                            </tr>
+                            <?php endforeach;?>
+                            
                         </tbody>
                     </table>
                     </p>

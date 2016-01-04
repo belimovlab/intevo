@@ -43,6 +43,7 @@
 * @property Themelib $themelib
 * @property Auth $auth
 * @property Profile_model $profile_model
+ * @property Storage_model $storage_model
 */
 
 class CI_Controller {};

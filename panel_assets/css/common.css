@@ -806,5 +806,10 @@ span.sub_input{
     font-size: 11px;
 }
 
-
+td.folder_link a{
+    text-decoration: none;
+}
+td.folder_link a:hover{
+    text-decoration: underline;
+}
 

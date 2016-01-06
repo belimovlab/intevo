@@ -11,7 +11,9 @@ class Main extends CI_Controller {
             parent::__construct();
             if(!$this->auth->is_logined())
             {
+                $this->auth->set_redirect_url();
                 redirect('/profile/login');
+                
             }
             $this->data['menu_main_name'] = $this->menu_main_name;
             $this->data['menu_sub_index'] = $this->menu_sub_index;

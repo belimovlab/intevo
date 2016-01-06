@@ -28,6 +28,12 @@ class Auth {
             $this->CI->session->unset_userdata('user_info');
             $this->CI->session->unset_userdata('user_logined');
         }
+        
+        
+        public function set_redirect_url()
+        {
+            $this->CI->session->set_userdata('redirected_url',$this->CI->uri->uri_string());
+        }
 }
 
 /* End of file Auth.php */

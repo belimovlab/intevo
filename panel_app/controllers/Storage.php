@@ -11,6 +11,7 @@ class Storage extends CI_Controller {
             parent::__construct();
             if(!$this->auth->is_logined())
             {
+                $this->auth->set_redirect_url();
                 redirect('/profile/login');
             }
             $this->data['menu_main_name'] = $this->menu_main_name;
@@ -31,4 +32,13 @@ class Storage extends CI_Controller {
             $this->data['files']   = $this->storage_model->get_files_in_folder();
             $this->load->view('/storage/index',  $this->data);
 	}
+        
+        
+        public function add_folder($parent_folder='')
+        {
+            $this->data['header']  = $this->themelib->get_header('Добавить новую папку');
+            $this->data['footer']  = $this->themelib->get_footer();
+            $this->data['parent_folder'] = $parent_folder;
+            $this->load->view('/storage/add_folder',  $this->data);
+        }
 }

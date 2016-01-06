@@ -11,7 +11,7 @@
             <div class="page_content">
                 <div class="filemanager">
                     <p>
-                        <a class="button button-primary button-small"><i class="fa fa-folder-open"></i> Добавить новую папку</a>
+                        <a class="button button-primary button-small" href="<?php echo base_url('/storage/add_folder')?>"><i class="fa fa-folder-open"></i> Добавить новую папку</a>
                         <a class="button button-action button-small"><i class="fa fa-upload"></i> Загрузить новый файл</a>
                         или 
                     </p>

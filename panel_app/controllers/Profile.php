@@ -24,6 +24,7 @@ class Profile extends CI_Controller {
             }
             if(!$this->auth->is_logined() && !in_array($this->uri->uri_string, $this->url_permission) )
             {
+                $this->auth->set_redirect_url();
                 redirect('/profile/login');
             }
         }
@@ -68,7 +69,15 @@ class Profile extends CI_Controller {
                     if($user_info->id)
                     {
                         $this->auth->user_login($user_info);
-                        redirect('/');
+                        $redirected_url = $this->themelib->getSessionValue('redirected_url');
+                        if($redirected_url)
+                        {
+                            redirect($redirected_url);
+                        }
+                        else
+                        {
+                            redirect('/');
+                        }
                     }
                     else
                     {

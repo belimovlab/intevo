@@ -13,8 +13,8 @@
                 <div class="grid_container">
                     <div class="grid_item_4">
                         <form action="<?php echo base_url('/storage/save_folder')?>" method="POST">
-                        <label for="site_name">Название папки</label>
-                        <input type="text" id="site_name" placeholder="Название папки" required>
+                        <label for="folder_name">Название папки</label>
+                        <input type="text" id="folder_name" name="folder_name" placeholder="Название папки" required>
                         <input type="hidden" name="parent_folder" value="<?php echo $parent_folder ? $parent_folder : '';?>">
                         <p>
                             <button class="button button-action button-small"><i class="fa fa-save"></i> Сохранить новую папку</button>

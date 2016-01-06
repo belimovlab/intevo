@@ -26,8 +26,8 @@ class Storage extends CI_Controller {
 
         public function index()
 	{
-            $this->data['header']  = $this->themelib->get_header('Хранилище');
-            $this->data['footer']  = $this->themelib->get_footer();
+            $this->data['header']  = $this->themelib->get_header('Хранилище','storage');
+            $this->data['footer']  = $this->themelib->get_footer('flow,file_upload');
             $this->data['folders'] = $this->storage_model->get_folders_in_folder();
             $this->data['files']   = $this->storage_model->get_files_in_folder();
             $this->load->view('/storage/index',  $this->data);
@@ -92,6 +92,80 @@ class Storage extends CI_Controller {
                 $this->data['header']  = $this->themelib->get_header('Ошибка доступа к папке');
                 $this->data['footer']  = $this->themelib->get_footer();
                 $this->load->view('/storage/folder_not_exists',  $this->data);
+            }
+
+        }
+        
+        /**
+        *
+        * Check if all the parts exist, and 
+        * gather all the parts of the file together
+        * @param string $dir - the temporary directory holding all the parts of the file
+        * @param string $fileName - the original file name
+        * @param string $chunkSize - each chunk size (in bytes)
+        * @param string $totalSize - original file size (in bytes)
+        */
+        private function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize) {
+
+
+            $total_files = 0;
+            foreach(scandir($temp_dir) as $file) {
+                 if (stripos($file, $fileName) !== false) {
+                     $total_files++;
+                 }
+            }
+
+            if ($total_files * $chunkSize >=  ($totalSize - $chunkSize + 1)) {
+                if (($fp = fopen('../temp/'.$fileName, 'w')) !== false) {
+                    for ($i=1; $i<=$total_files; $i++) {
+                        fwrite($fp, file_get_contents($temp_dir.'/'.$fileName.'.part'.$i));
+                    }
+                    fclose($fp);
+                } else {
+                    return false;
+                }
+                if (rename($temp_dir, $temp_dir.'_UNUSED')) {
+                    rrmdir($temp_dir.'_UNUSED');
+                } else {
+                    rrmdir($temp_dir);
+                }
+            }
+
+        }
+
+
+        
+        public function uploads()
+        {
+
+
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                $temp_dir = '../temp/'.$_GET['flowIdentifier'];
+                $chunk_file = $temp_dir.'/'.$_GET['flowFilename'].'.part'.$_GET['flowChunkNumber'];
+                if (file_exists($chunk_file)) {
+                    header("HTTP/1.0 200 Ok");
+                } else
+                {
+                  header("HTTP/1.0 404 Not Found");
+                }
+            }
+
+            if (!empty($_FILES)) foreach ($_FILES as $file) {
+                if ($file['error'] != 0) {
+                    continue;
+                }
+                $temp_dir = '../temp/'.$_POST['flowIdentifier'];
+                $dest_file = $temp_dir.'/'.$_POST['flowFilename'].'.part'.$_POST['flowChunkNumber'];
+
+                if (!is_dir($temp_dir)) {
+                    mkdir($temp_dir, 0777, true);
+                }
+                if (!move_uploaded_file($file['tmp_name'], $dest_file)) {
+
+                } else {
+                    $this->createFileFromChunks($temp_dir, $_POST['flowFilename'],
+                            $_POST['flowChunkSize'], $_POST['flowTotalSize']);
+                }
             }
 
         }

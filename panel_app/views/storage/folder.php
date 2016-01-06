@@ -13,9 +13,11 @@
                     <p>
                         <a class="button button-royal button-small" href="<?php echo $folder_info->parent_folder ? base_url('/storage/folder/'.$folder_info->parent_folder) : base_url('/storage/');?>"><i class="fa fa-backward"></i> К предыдущей папке</a>
                         <a class="button button-primary button-small" href="<?php echo base_url('/storage/add_folder/'.$parent_id)?>"><i class="fa fa-folder-open"></i> Добавить новую папку</a>
-                        <a class="button button-action button-small"><i class="fa fa-upload"></i> Загрузить новый файл</a>
+                        <a class="button button-action button-small" id="upload_file_button"><i class="fa fa-upload"></i> Загрузить новый файл</a>
                         или 
                     </p>
+                    <input type="file" id="fileinput" multiple="multiple" style="display: none;" id="upload_file_input"/>
+
                     <p style="margin: 30px 0px;">
                     <div id="dropzone"><form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload"><div class="dz-message needsclick">Перетащите файлы сюда</div></form></div>
                     </p>

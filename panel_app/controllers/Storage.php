@@ -6,7 +6,8 @@ class Storage extends CI_Controller {
         var $data;
         protected  $menu_main_name = 'storage';
         protected  $menu_sub_index = 0;
-        
+        protected  $xz = 1;
+                
         function __construct() {
             parent::__construct();
             if(!$this->auth->is_logined())

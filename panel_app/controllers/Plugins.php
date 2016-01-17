@@ -25,7 +25,7 @@ class Plugins extends CI_Controller {
         public function index()
 	{
             $this->data['header'] = $this->themelib->get_header('Плагины');
-            $this->data['footer'] = $this->themelib->get_footer('plugins');
+            $this->data['footer'] = $this->themelib->get_footer('storage');
             $this->load->view('plugins/index',  $this->data);
 	}
         

@@ -15,38 +15,23 @@
                         <a class="button button-action button-small" id="upload_file_button"><i class="fa fa-upload"></i> Загрузить новый файл</a>
                         или 
                     </p>
-                    <input type="file" id="fileinput" multiple="multiple" style="display: none;" id="upload_file_input"/>
 
-                    <p>
-                        <div class="flow-error">
-                            Ваш браузер скорее всего не поддерживает современные способы загрузки файлов. 
-                        </div>
-
-                        <div class="flow-drop" ondragenter="jQuery(this).addClass('flow-dragover');" ondragend="jQuery(this).removeClass('flow-dragover');" ondrop="jQuery(this).removeClass('flow-dragover');">
-                          Перенесите сюда  <a class="flow-browse"><u>файлы</u></a></a>
-                        </div>
-
-                        <div class="flow-progress">
-                            <table>
-                                <tr>
-                                    <td width="100%"><div class="progress-container"><div class="progress-bar"></div></div></td>
-                                    <td class="progress-text" nowrap="nowrap"></td>
-                                    <td class="progress-pause" nowrap="nowrap">
-                                        <a href="#" onclick="r.upload(); return(false);" class="progress-resume-link"><img src="/panel_assets/images/resume.png" title="Resume upload" /></a>
-                                        <a href="#" onclick="r.pause(); return(false);" class="progress-pause-link"><img src="/panel_assets/images/pause.png" title="Pause upload" /></a>
-                                        <a href="#" onclick="r.cancel(); return(false);" class="progress-cancel-link"><img src="/panel_assets/images/cancel.png" title="Cancel upload" /></a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <ul class="flow-list"></ul>
+                    <p style="margin: 30px 0px;">
+                    <input type="file" name="files_area" id="files_area" multiple="true" hidden="true" />
+                    <div id="dropzone" data-folder-id="<?php echo $folder_info->id ? $folder_info->id : 0 ; ?>">
+                        <form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
+                            <div class="dz-message needsclick">Перетащите файлы сюда</div>
+                        </form>
+                    </div>
                     </p>
                     
-                    
-                    
-                    <p style="margin: 30px 0px;">
-                    <div id="dropzone"><form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload"><div class="dz-message needsclick">Перетащите файлы сюда</div></form></div>
+ 
+                    <p class="flow_list_p">
+                    <div class="flow_list_div">
+                        <ul class="flow-list">
+                           
+                        </ul>
+                    </div>
                     </p>
                     <div style="clear: both;"></div>
                     <p>

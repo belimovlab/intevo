@@ -43,4 +43,16 @@ class Storage_model extends CI_Model {
                 'id'=>$folder_id
             ))->row();
         }
+        
+        
+        public function save_file_into_db($file,$file_name,$folder_id=0)
+        {
+            $this->db->insert('storage',array(
+                'id'=>'',
+                'name'=>  $name,
+                'is_folder'=>1,
+                'parent_folder'=>$parent_folder,
+                'create_date'=>date('Y-m-d H:i:s')
+            ));
+        }
 }

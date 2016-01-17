@@ -11,7 +11,7 @@
             <div class="page_content">
                 <div class="filemanager">
                     <p>
-                        <a class="button button-royal button-small" href="<?php echo $folder_info->parent_folder ? base_url('/storage/folder/'.$folder_info->parent_folder) : base_url('/storage/');?>"><i class="fa fa-backward"></i> К предыдущей папке</a>
+                        <a class="button button-royal button-small" href="<?php echo $folder_info->parent_folder ? base_url('/storage/folder/'.$folder_info->parent_folder) : base_url('/storage/');?>"><i class="fa fa-level-up"></i> К предыдущей папке</a>
                         <a class="button button-primary button-small" href="<?php echo base_url('/storage/add_folder/'.$parent_id)?>"><i class="fa fa-folder-open"></i> Добавить новую папку</a>
                         <a class="button button-action button-small" id="upload_file_button"><i class="fa fa-upload"></i> Загрузить новый файл</a>
                         или 
@@ -35,6 +35,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if($folder_info->parent_folder):?>
+                            <tr>
+                                <td><i class="fa fa-level-up"></i></td>
+                                <td class="folder_link" colspan="5" style="text-align: left;"><a href="<?php echo base_url('/storage/folder/'.$folder_info->parent_folder)?>"><strong>Вернуться назад...</strong></a></td>
+                            </tr>
+                            <?php else:?>
+                            <tr>
+                                <td><i class="fa fa-level-up"></i></td>
+                                <td class="folder_link" colspan="5" style="text-align: left;"><a href="<?php echo base_url('/storage/')?>"><strong>Вернуться назад...</strong></a></td>
+                            </tr>
+                            <?php endif;?>
                             <?php foreach($folders as $one):?>
                             <tr>
                                 <td><i class="fa fa-folder" style="color: #FFB300;"></i></td>

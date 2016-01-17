@@ -28,7 +28,7 @@ class Storage extends CI_Controller {
         public function index()
 	{
             $this->data['header']  = $this->themelib->get_header('Хранилище','storage');
-            $this->data['footer']  = $this->themelib->get_footer('flow,file_upload');
+            $this->data['footer']  = $this->themelib->get_footer('flow,storage');
             $this->data['folders'] = $this->storage_model->get_folders_in_folder();
             $this->data['files']   = $this->storage_model->get_files_in_folder();
             $this->load->view('/storage/index',  $this->data);
@@ -117,7 +117,8 @@ class Storage extends CI_Controller {
             }
 
             if ($total_files * $chunkSize >=  ($totalSize - $chunkSize + 1)) {
-                if (($fp = fopen('../temp/'.$fileName, 'w')) !== false) {
+                $new_file_name = mktime().'_'.md5($fileName).".".substr($fileName, strrpos($fileName, '.')+1);
+                if (($fp = fopen('../temp/'.$new_file_name, 'w')) !== false) {
                     for ($i=1; $i<=$total_files; $i++) {
                         fwrite($fp, file_get_contents($temp_dir.'/'.$fileName.'.part'.$i));
                     }
@@ -126,10 +127,11 @@ class Storage extends CI_Controller {
                     return false;
                 }
                 if (rename($temp_dir, $temp_dir.'_UNUSED')) {
-                    rrmdir($temp_dir.'_UNUSED');
+                    rmdir($temp_dir.'_UNUSED');
                 } else {
-                    rrmdir($temp_dir);
+                    rmdir($temp_dir);
                 }
+                echo $new_file_name;
             }
 
         }
@@ -166,9 +168,30 @@ class Storage extends CI_Controller {
                 } else {
                     $this->createFileFromChunks($temp_dir, $_POST['flowFilename'],
                             $_POST['flowChunkSize'], $_POST['flowTotalSize']);
+                    
                 }
             }
 
+        }
+        
+        
+        public function save_file()
+        {
+            if ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' )
+            {
+                if($this->input->post('file') && $this->input->post('file_name'))
+                {
+                    
+                }
+                else
+                {
+                    echo -2;
+                }
+            }
+            else
+            {
+                echo -1;
+            }
         }
         
 }

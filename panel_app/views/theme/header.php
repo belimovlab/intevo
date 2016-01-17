@@ -14,6 +14,7 @@
     <?php endforeach;?>
     <script src="/panel_assets/js/jquery-2.1.1.min.js"></script>
     <script src="/panel_assets/js/classie.js"></script>
+    <script src="/panel_assets/js/modernizr-custom.js"></script>
     <meta name="viewport" content="width=1200px">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,7 +61,7 @@
                 <li class="menu <?php echo $menu_main_name == 'storage' ? 'active' : '';?>"><a href="<?php echo base_url('/storage')?>"><i class="fa fa-database"></i> Хранилище</a></li>
                 <li class="nav_divider"></li>
                 <li class="nav_title">Расширение</li>
-                <li class="menu"><a href="#"><i class="fa fa-plug"></i> Плагины</a></li>
+                <li class="menu <?php echo $menu_main_name == 'plugins' ? 'active' : '';?>"><a href="<?php echo base_url('/plugins')?>"><i class="fa fa-plug"></i> Плагины</a></li>
                 <li class="menu"><a href="#"><i class="fa fa-archive"></i> Модули</a></li>
                 <li class="nav_divider"></li>
                 <li class="nav_title">Система</li>

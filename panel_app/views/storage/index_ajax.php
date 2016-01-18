@@ -1,4 +1,3 @@
-<?php echo $header;?>
 <div id="reload_content">
     <div class="page_header">
         <ul class="breadcrumb">
@@ -12,8 +11,8 @@
             <div class="page_content">
                 <div class="filemanager">
                     <p>
-                        <a class="button button-primary button-small" href="<?php echo base_url('/storage/add_folder/'.$folder_info->id)?>" id="add_folder_button"><i class="fa fa-folder-open"></i> Добавить новую папку</a>
-                        <a class="button button-action button-small" id="upload_file_button" data-folder-id="<?php echo $folder_info->id ? $folder_info->id : 0 ; ?>"><i class="fa fa-upload"></i> Загрузить новый файл</a>
+                        <a class="button button-primary button-small" href="<?php echo base_url('/storage/add_folder')?>" id="add_folder_button"><i class="fa fa-folder-open"></i> Добавить новую папку</a>
+                        <a class="button button-action button-small" id="upload_file_button"><i class="fa fa-upload"></i> Загрузить новый файл</a>
                         или 
                     </p>
 
@@ -48,17 +47,6 @@
                             </tr>
                         </thead>
                         <tbody id="body_updated">
-                            <?php if($folder_info->parent_folder):?>
-                            <tr>
-                                <td><i class="fa fa-level-up"></i></td>
-                                <td class="folder_link" colspan="5" style="text-align: left;"><a href="<?php echo base_url('/storage/folder/'.$folder_info->parent_folder)?>" class="historyAPI"><strong>Вернуться назад...</strong></a></td>
-                            </tr>
-                            <?php else:?>
-                            <tr>
-                                <td><i class="fa fa-level-up"></i></td>
-                                <td class="folder_link" colspan="5" style="text-align: left;"><a href="<?php echo base_url('/storage/')?>"><strong>Вернуться назад...</strong></a></td>
-                            </tr>
-                            <?php endif;?>
                             <?php foreach($folders as $one):?>
                             <tr>
                                 <td><i class="fa fa-folder" style="color: #FFB300;"></i></td>
@@ -100,6 +88,3 @@
         </div>
     </div>
 </div>
-<?php echo $footer;
-
-

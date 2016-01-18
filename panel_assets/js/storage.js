@@ -5,9 +5,9 @@
 
 var Storage = {
     jq: '',
-    to_div: '',
-    upload_url_string: './storage/uploads',
-    save_url_string: './storage/save_file',
+    to_div: '#reload_content',
+    upload_url_string: '/panel/storage/uploads',
+    save_url_string: '/panel/storage/save_file',
     r : '',
     folder_id : 0 ,
     readablizeBytes: function(bytes){
@@ -40,6 +40,7 @@ var Storage = {
     },
     init_flow_js: function(){
         var _th = this;
+        _th.folder_id = _th.jq('#upload_file_button').data('folder-id');
         _th.r = new Flow({
             target: _th.upload_url_string,
             chunkSize: 1024*1024,
@@ -62,7 +63,17 @@ var Storage = {
 
         });
         _th.r.on('fileSuccess', function(file,message) {
-            _th.add_file_in_folder(message,file.name);
+            var res_data = JSON.parse(message);
+            _th.folder_id = res_data.folder_id;
+            if(res_data.error == "-1")
+            {
+                $N('Файл <strong>' + file.name +'</strong> не был загружен').setStyle('error').show('.full-notify');
+            }
+            else
+            {
+               _th.add_file_in_folder(res_data.file_name,file.name); 
+               $N('Файл <strong>' + file.name +'</strong> успешно загружен').setStyle('success').show('.full-notify');
+            }
         });
         _th.r.on('filesSubmitted', function(file) {
             _th.r.upload();
@@ -83,18 +94,32 @@ var Storage = {
     },
     add_file_in_folder: function(file,file_name){
         var _th =this;
-        _th.jq.ajax({
+         _th.jq.ajax({
             type: "POST",
             url: _th.save_url_string,
             data: {file: file, file_name:  file_name,folder_id : _th.folder_id},
             success: function(data){
-                alert(data);
+                var res_data = JSON.parse(data);
+                if(res_data.folder_id !== '-1' && res_data.folder_id !== "undefined")
+                {
+                    _th.get_content('/panel/storage/folder/'+res_data.folder_id, _th.to_div, true);
+                }
+                else
+                {
+                    _th.get_content('/panel/storage', _th.to_div, true);
+                }
+                _th.re_init();
             }
         });
     },
     bind_dropzone_click: function(){
         var _th = this;
         _th.jq('#dropzone').click(function(e){
+            e.stopImmediatePropagation();
+            _th.folder_id = _th.jq(this).data('folder-id');
+            _th.jq("#files_area").trigger('click');
+        });
+        _th.jq('#upload_file_button').click(function(e){
             e.stopImmediatePropagation();
             _th.folder_id = _th.jq(this).data('folder-id');
             _th.jq("#files_area").trigger('click');
@@ -106,9 +131,8 @@ var Storage = {
             _th.jq('.historyAPI').on('click', function(e){
                 e.preventDefault();
                 var href = _th.jq(this).attr('href');
+                _th.folder_id = _th.jq(this).data('folder_id_from_save');
                 _th.get_content(href, _th.to_div, true);
-                _th.jq('.historyAPI').removeClass('active');
-                _th.jq(this).addClass('active');
             });
         }
     },
@@ -121,7 +145,9 @@ var Storage = {
             if(addEntry == true) {
                 history.pushState(null, null, url);
             }
+            _th.re_init();
         });
+
     },
     init_popstate: function(){
         var _th = this;
@@ -129,11 +155,16 @@ var Storage = {
             _th.get_content(location.pathname, _th.to_div, false);
         });
     },
-    init: function(jquery,to_div)
+    re_init: function(){
+        this.init_popstate();
+        this.reset_config();
+        this.bind_dropzone_click();
+        this.init_flow_js();
+    },
+    init: function(jquery)
     {
         this.jq = jquery;
         this.init_popstate();
-        this.to_div = to_div;
         this.reset_config();
         this.bind_dropzone_click();
         this.init_flow_js();
@@ -145,5 +176,5 @@ var Storage = {
 
 
 jQuery('document').ready(function(){
-    Storage.init($,'#his_content');
+    Storage.init($);
 });

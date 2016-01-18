@@ -31,7 +31,14 @@ class Storage extends CI_Controller {
             $this->data['footer']  = $this->themelib->get_footer('flow,storage');
             $this->data['folders'] = $this->storage_model->get_folders_in_folder();
             $this->data['files']   = $this->storage_model->get_files_in_folder();
-            $this->load->view('/storage/index',  $this->data);
+            if ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' )
+            {
+                $this->load->view('/storage/index_ajax',  $this->data);
+            }
+            else
+            {
+                $this->load->view('/storage/index',  $this->data);
+            }
 	}
         
         
@@ -74,25 +81,40 @@ class Storage extends CI_Controller {
             
                 if($this->data['folder_info']->id)
                 {
-                    $this->data['header']  = $this->themelib->get_header('Хранилище');
-                    $this->data['footer']  = $this->themelib->get_footer();
+                    $this->data['header']  = $this->themelib->get_header('Хранилище','storage');
+                    $this->data['footer']  = $this->themelib->get_footer('flow,storage');
                     $this->data['folders'] = $this->storage_model->get_folders_in_folder($folder_id);
                     $this->data['files']   = $this->storage_model->get_files_in_folder($folder_id);
                     $this->data['parent_id'] = $folder_id;
-                    $this->load->view('/storage/folder',  $this->data);
+                    if ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' )
+                    {
+                        $this->load->view('/storage/folder_ajax',  $this->data);
+                    }
+                    else
+                    {
+                        $this->load->view('/storage/folder',  $this->data);
+                    }
                 }
                 else
                 {
-                    $this->data['header']  = $this->themelib->get_header('Ошибка доступа к папке');
-                    $this->data['footer']  = $this->themelib->get_footer();
+                    $this->data['header']  = $this->themelib->get_header('Ошибка доступа к папке','storage');
+                    $this->data['footer']  = $this->themelib->get_footer('flow,storage');
                     $this->load->view('/storage/folder_not_exists',  $this->data);
                 }
             }
             else
             {
-                $this->data['header']  = $this->themelib->get_header('Ошибка доступа к папке');
-                $this->data['footer']  = $this->themelib->get_footer();
-                $this->load->view('/storage/folder_not_exists',  $this->data);
+                if(!$folder_id)
+                {
+                    redirect('/storage');
+                }
+                else
+                {
+                    $this->data['header']  = $this->themelib->get_header('Ошибка доступа к папке','storage');
+                    $this->data['footer']  = $this->themelib->get_footer('flow,storage');
+                    $this->load->view('/storage/folder_not_exists',  $this->data);
+                }
+                
             }
 
         }
@@ -127,15 +149,44 @@ class Storage extends CI_Controller {
                     return false;
                 }
                 if (rename($temp_dir, $temp_dir.'_UNUSED')) {
-                    rmdir($temp_dir.'_UNUSED');
+                    $this->rrmdir($temp_dir.'_UNUSED');
                 } else {
-                    rmdir($temp_dir);
+                    $this->rrmdir($temp_dir);
                 }
-                echo $new_file_name;
+                if(file_exists('../temp/'.$new_file_name))
+                {
+                     echo json_encode(array('file_name'=>$new_file_name,"error"=>1,"folder_id"=>$_POST['folder_id']));
+                }
+                else
+                {
+                    echo json_encode(array("error"=>-1));
+                }
+               
             }
 
         }
 
+        
+        private function rrmdir($dir) { 
+            if (is_dir($dir)) { 
+                $objects = scandir($dir); 
+                foreach ($objects as $object) { 
+                    if ($object != "." && $object != "..") 
+                    { 
+                        if (filetype($dir."/".$object) == "dir")
+                        { 
+                            $this->rrmdir($dir."/".$object);
+                        }
+                        else
+                        {
+                            unlink($dir."/".$object); 
+                        }
+                    }
+                } 
+                reset($objects); 
+                rmdir($dir); 
+            } 
+        } 
 
         
         public function uploads()
@@ -164,7 +215,7 @@ class Storage extends CI_Controller {
                     mkdir($temp_dir, 0777, true);
                 }
                 if (!move_uploaded_file($file['tmp_name'], $dest_file)) {
-
+                    echo json_encode(array("error"=>-1));
                 } else {
                     $this->createFileFromChunks($temp_dir, $_POST['flowFilename'],
                             $_POST['flowChunkSize'], $_POST['flowTotalSize']);
@@ -181,16 +232,17 @@ class Storage extends CI_Controller {
             {
                 if($this->input->post('file') && $this->input->post('file_name'))
                 {
-                    
+                    $this->storage_model->save_file_into_db($this->input->post('file') , $this->input->post('file_name'), $this->input->post('folder_id'));
+                    echo json_encode(array("folder_id"=> $this->input->post('folder_id') ?  $this->input->post('folder_id') : '-1',"error"=>1));
                 }
                 else
                 {
-                    echo -2;
+                    echo json_encode(array("error"=>-2));
                 }
             }
             else
             {
-                echo -1;
+                echo json_encode(array("error"=>-1));
             }
         }
         

@@ -2,6 +2,7 @@
     <div class="page_header">
         <ul class="breadcrumb">
             <li><a href="<?php echo base_url('/')?>">Рабочий стол</a></li>
+            <li><a href="<?php echo base_url('/storage')?>">Хранилище</a></li>
             <li class="active"><?php echo $title;?></li>
         </ul>
     </div>

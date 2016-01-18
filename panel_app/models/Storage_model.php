@@ -45,14 +45,18 @@ class Storage_model extends CI_Model {
         }
         
         
-        public function save_file_into_db($file,$file_name,$folder_id=0)
+        public function save_file_into_db($file,$file_name,$folder_id='')
         {
+            $folder_id = $folder_id && $folder_id != 'undefined' ? $folder_id : '';
             $this->db->insert('storage',array(
                 'id'=>'',
-                'name'=>  $name,
-                'is_folder'=>1,
-                'parent_folder'=>$parent_folder,
-                'create_date'=>date('Y-m-d H:i:s')
+                'name'=>  $file_name,
+                'is_folder'=>0,
+                'parent_folder'=>$folder_id,
+                'create_date'=>date('Y-m-d H:i:s'),
+                'size'=>  filesize('../temp/'.$file),
+                'url'=>'/temp/'.$file,
+                'myme_type'=>  mime_content_type('../temp/'.$file)
             ));
         }
 }

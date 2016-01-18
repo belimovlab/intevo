@@ -813,3 +813,57 @@ td.folder_link a:hover{
     text-decoration: underline;
 }
 
+.notify {
+  width: 100%;
+  z-index: 5000;
+}
+
+.left-notify {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+}
+
+.right-notify {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+}
+
+
+
+.notiser {
+  width: 100%;
+  border-radius: 3px;
+  text-align: center;
+  color: white;
+  padding: 15px 15px;
+  font-size: 14px;
+  margin-bottom: 1px;
+  cursor: pointer;
+}
+
+.notiser.success {
+  background-color: #1abc9c;
+}
+
+.notiser.warning {
+  background-color: #D66882;
+}
+
+.notiser.basic {
+  background-color: #d0d3d3;
+}
+
+
+/*
+  FULL WIDTH NOTIFICATION
+*/
+.full-notify {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 5000;
+  width: 100%;
+}
+

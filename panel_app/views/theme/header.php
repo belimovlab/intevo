@@ -15,6 +15,7 @@
     <script src="/panel_assets/js/jquery-2.1.1.min.js"></script>
     <script src="/panel_assets/js/classie.js"></script>
     <script src="/panel_assets/js/modernizr-custom.js"></script>
+    <script src="/panel_assets/js/Notiser.js"></script>
     <meta name="viewport" content="width=1200px">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -38,6 +39,7 @@
             <a href="<?php echo base_url('/profile/logout')?>"><i class="fa fa-sign-out"></i> Выйти</a>
         </div>
     </header>
+    <div class="full-notify"></div>
     <div class="main_wrapper">
         <div class="left_side">
             <ul class="menu_wrapper" id="menu_wrapper">

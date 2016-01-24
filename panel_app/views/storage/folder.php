@@ -1,4 +1,5 @@
 <?php echo $header;?>
+
 <div id="reload_content">
     <div class="page_header">
         <ul class="breadcrumb">

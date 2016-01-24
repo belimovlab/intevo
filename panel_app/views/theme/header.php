@@ -7,6 +7,7 @@
     <link href="/panel_assets/css/common.css" rel="stylesheet" type="text/css"/>
     <link href="/panel_assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="/panel_assets/css/component.css" rel="stylesheet" type="text/css"/>
+    <link href="/panel_assets/css/toastr.min.css" rel="stylesheet" type="text/css"/>
     <?php foreach($css as $one):?>
         <?php if($one):?>
             <link href="/panel_assets/css/<?php echo $one?>.css" rel="stylesheet" type="text/css"/>
@@ -15,7 +16,7 @@
     <script src="/panel_assets/js/jquery-2.1.1.min.js"></script>
     <script src="/panel_assets/js/classie.js"></script>
     <script src="/panel_assets/js/modernizr-custom.js"></script>
-    <script src="/panel_assets/js/Notiser.js"></script>
+    <script src="/panel_assets/js/toastr.min.js"></script>
     <meta name="viewport" content="width=1200px">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,6 +41,12 @@
         </div>
     </header>
     <div class="full-notify"></div>
+    <div class="popup_window">
+        <div class="popup_window_content">
+            <div class="popup_window_content_close">Закрыть</div>
+            <div class="popup_window_content_content"></div>
+        </div>
+    </div>
     <div class="main_wrapper">
         <div class="left_side">
             <ul class="menu_wrapper" id="menu_wrapper">

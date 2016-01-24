@@ -28,7 +28,7 @@ class Storage extends CI_Controller {
         public function index()
 	{
             $this->data['header']  = $this->themelib->get_header('Хранилище','storage');
-            $this->data['footer']  = $this->themelib->get_footer('flow,storage');
+            $this->data['footer']  = $this->themelib->get_footer('clipboard.min,flow,storage');
             $this->data['folders'] = $this->storage_model->get_folders_in_folder();
             $this->data['files']   = $this->storage_model->get_files_in_folder();
             if ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' )
@@ -82,7 +82,7 @@ class Storage extends CI_Controller {
                 if($this->data['folder_info']->id)
                 {
                     $this->data['header']  = $this->themelib->get_header('Хранилище','storage');
-                    $this->data['footer']  = $this->themelib->get_footer('flow,storage');
+                    $this->data['footer']  = $this->themelib->get_footer('clipboard.min,flow,storage');
                     $this->data['folders'] = $this->storage_model->get_folders_in_folder($folder_id);
                     $this->data['files']   = $this->storage_model->get_files_in_folder($folder_id);
                     $this->data['parent_id'] = $folder_id;

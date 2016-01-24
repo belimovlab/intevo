@@ -855,10 +855,6 @@ td.folder_link a:hover{
   background-color: #d0d3d3;
 }
 
-
-/*
-  FULL WIDTH NOTIFICATION
-*/
 .full-notify {
   position: absolute;
   left: 0;
@@ -866,4 +862,95 @@ td.folder_link a:hover{
   z-index: 5000;
   width: 100%;
 }
+
+.popup_window{
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0, .7);
+    display: none;
+}
+
+.popup_window_content{
+    width: 600px;
+    background: #fff;
+    padding: 5px 10px;
+    margin: 150px auto 0px auto;
+    z-index: 999;
+    display: block;
+}
+
+.popup_window_content:after{
+    clear: both;
+}
+
+.popup_window_content_close{
+    text-align:  right;
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    padding-top: 5px;
+}
+
+.popup_window_content_content{
+    width: 100%;
+    display: block;
+    position: relative;
+}
+.popup_window_content_content:after{
+    clear: both;
+    content: ' ';
+}
+
+.link_area{
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #eee;
+    word-wrap: break-word;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

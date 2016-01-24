@@ -5,6 +5,7 @@
 
 var Storage = {
     jq: '',
+    clipboard: '',
     to_div: '#reload_content',
     upload_url_string: '/panel/storage/uploads',
     save_url_string: '/panel/storage/save_file',
@@ -67,6 +68,7 @@ var Storage = {
             _th.folder_id = res_data.folder_id;
             if(res_data.error == "-1")
             {
+                toastr.info('Are you the 6 fingered man?');
                 $N('Файл <strong>' + file.name +'</strong> не был загружен').setStyle('error').show('.full-notify');
             }
             else
@@ -160,6 +162,48 @@ var Storage = {
         this.reset_config();
         this.bind_dropzone_click();
         this.init_flow_js();
+        this.bind_popup_show();
+    },
+    bind_popup_show: function(){
+        var _th = this;
+        _th.jq('.popup').click(function(e){
+            e.preventDefault();
+            _th.jq('.popup_window').css('display','block');
+            var file_url = _th.jq(this).data('file_url');
+            var html = '<p>Ссылка на файл:</p><p class="link_area">'+file_url+'</p>';
+             html += '<p style="text-align:center;"><button class="button button-royal button-smal clip_action_link" data-clipboard-text="'+file_url+'"><i class="fa fa-clipboard"></i> Скопировать в буфер обмена</button></p>';
+            _th.jq('.popup_window_content_content').html(html);
+            _th.clipboard = new Clipboard('.clip_action_link');
+            _th.clipboard.on('success', function(ee) {
+                toastr.success('Информация скопирована');
+                _th.jq('.popup_window').css('display','none');
+                _th.jq('.popup_window_content_content').html('');
+                ee.clearSelection();
+                _th.bind_popup_show();
+            });
+            _th.clipboard.on('error', function(e) {
+                toastr.error('Информация не скопирована');
+                _th.jq('.popup_window').css('display','none');
+                _th.jq('.popup_window_content_content').html('');
+            });
+        });
+        _th.jq('.popup_window_content_close').click(function(e){
+            e.preventDefault();
+            _th.jq('.popup_window').css('display','none');
+        });
+        _th.bind_popup_hide();
+    },
+    bind_popup_hide: function(){
+        var _th = this;
+        _th.jq('.popup_window').click(function(e){
+            e.preventDefault();
+            if(!_th.jq(e.target).is(".popup_window_content") && !_th.jq(e.target).parents().is(".popup_window_content"))
+            {
+                _th.jq('.popup_window').css('display','none');
+                _th.jq('.popup_window_content_content').html('');
+            }
+        });
+        
     },
     init: function(jquery)
     {
@@ -168,6 +212,8 @@ var Storage = {
         this.reset_config();
         this.bind_dropzone_click();
         this.init_flow_js();
+        this.bind_popup_show();
+        toastr.success('Are you the 6 fingered man?');
     }
 };
 

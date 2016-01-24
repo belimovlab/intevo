@@ -7,7 +7,7 @@
 
   // private variables
   var supportedStyles = ['basic', 'warning', 'success'];
-  var basicAge = 3000;
+  var basicAge = 2000;
 
   Notiser.prototype = {
 

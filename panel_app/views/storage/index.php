@@ -56,9 +56,7 @@
                                 <td>-</td>
                                 <td><?php echo date('d.m.Y',  strtotime($one->create_date))?></td>
                                 <td>
-                                    <a href="#"><i class="fa fa-eye"></i></a>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="popup"><i class="fa fa-trash"></i></a>
 
                                 </td>
                             </tr>
@@ -73,9 +71,8 @@
                                 <td><?php echo formatSizeUnits($one->size)?></td>
                                 <td><?php echo date('d.m.Y',  strtotime($one->create_date))?></td>
                                 <td>
-                                    <a href="#"><i class="fa fa-eye"></i></a>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a href="#"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="popup" data-file_url="<?php echo str_replace("/panel/", "/", base_url($one->url))?>"><i class="fa fa-link"></i></a>
+                                    <a href="#" class="popup"><i class="fa fa-trash"></i></a>
 
                                 </td>
                             </tr>
